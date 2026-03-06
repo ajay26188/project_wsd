@@ -2,6 +2,7 @@ import { Hono } from "@hono/hono";
 import { cors } from "@hono/hono/cors";
 import { logger } from "@hono/hono/logger";
 import * as communityController from "./controllers/communityController.js";
+import * as postController from "./controllers/postController.js";
 
 // importing database client
 import postgres from "postgres";
@@ -29,5 +30,16 @@ app.post("/api/communities", communityController.create);
 app.put("/api/communities/:communityId", communityController.update);
 
 app.delete("/api/communities/:communityId", communityController.deleteOne);
+
+//retrieving posts for a community
+app.get("/api/communities/:communityId/posts", postController.readAll);
+
+app.get("/api/communities/:communityId/posts/:postId", postController.readOne);
+
+app.post("/api/communities/:communityId/posts", postController.create);
+
+app.put("/api/communities/:communityId/posts/:postId", postController.update);
+
+app.delete("/api/communities/:communityId/posts/:postId", postController.deleteOne);
 
 export default app;
