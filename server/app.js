@@ -3,6 +3,7 @@ import { cors } from "@hono/hono/cors";
 import { logger } from "@hono/hono/logger";
 import * as communityController from "./controllers/communityController.js";
 import * as postController from "./controllers/postController.js";
+import * as commentController from "./controllers/commentController.js";
 
 // importing database client
 import postgres from "postgres";
@@ -41,5 +42,12 @@ app.post("/api/communities/:communityId/posts", postController.create);
 app.put("/api/communities/:communityId/posts/:postId", postController.update);
 
 app.delete("/api/communities/:communityId/posts/:postId", postController.deleteOne);
+
+//retrieving comments for a post
+app.get("/api/communities/:communityId/posts/:postId/comments", commentController.readAll);
+
+app.post("/api/communities/:communityId/posts/:postId/comments", commentController.create);
+
+app.delete("/api/communities/:communityId/posts/:postId/comments/:commentId", commentController.deleteOne);
 
 export default app;
